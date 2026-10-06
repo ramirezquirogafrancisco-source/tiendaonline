@@ -22,11 +22,7 @@ app.register_blueprint(detalle_pedido_bp)
 # 3. RUTA INICIAL / PRINCIPAL
 @app.route("/")
 def home():
-    # Redirige a la vista principal de productos al ingresar a http://127.0.0.1:5000/
-    try:
-        return redirect(url_for("productos.listar_productos"))
-    except:
-        return redirect(url_for("producto_blueprint.index"))
+    return redirect(url_for("producto.index"))
 
 
 if __name__ == "__main__":
