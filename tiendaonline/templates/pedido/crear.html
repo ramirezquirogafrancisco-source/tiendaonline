@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}Crear Pedido{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            
+            <div class="mb-4">
+                <a href="{{ url_for('pedidos.listar_pedidos') }}" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1 mb-2">
+                    <i class="bi bi-arrow-left"></i> Volver a la lista
+                </a>
+                <h2 class="fw-bold m-0" style="color: var(--text-dark);">Nuevo Pedido</h2>
+                <p class="text-muted small">Selecciona el cliente para registrar la compra.</p>
+            </div>
+
+            <div class="custom-card p-4">
+                <form action="{{ url_for('pedidos.crear_pedido') }}" method="POST">
+                    
+                    <div class="mb-4">
+                        <label for="id_cliente" class="form-label fw-semibold small" style="color: var(--text-dark);">Cliente</label>
+                        <select class="form-select" id="id_cliente" name="id_cliente" required style="border-color: var(--border-color);">
+                            <option value="" disabled selected>-- Selecciona un cliente --</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.ID_Cliente }}">
+                                    #{{ cliente.ID_Cliente }} - {{ cliente.Nombre }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('pedidos.listar_pedidos') }}" class="btn btn-cream-outline rounded-pill px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-cream-accent rounded-pill px-4 fw-bold shadow-sm">Guardar Pedido</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

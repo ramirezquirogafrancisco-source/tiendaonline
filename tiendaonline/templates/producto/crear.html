@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}Nuevo Producto - Tienda Los Insuficientes{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="mb-3">
+            <a href="{{ url_for('producto.index') }}" class="text-decoration-none text-secondary small">
+                <i class="bi bi-arrow-left me-1"></i> Volver al catálogo
+            </a>
+        </div>
+        
+        <div class="card custom-card">
+            <div class="card-body p-4">
+                <h3 class="fw-bold text-dark mb-4">Añadir Producto</h3>
+                
+                <form action="{{ url_for('producto.crear') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label fw-semibold text-secondary small">Nombre del Producto</label>
+                        <input type="text" class="form-control rounded-3" id="nombre" name="nombre" required>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <label for="precio" class="form-label fw-semibold text-secondary small">Precio</label>
+                            <input type="text" class="form-control rounded-3" id="precio" name="precio" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="stock" class="form-label fw-semibold text-secondary small">Stock</label>
+                            <input type="text" class="form-control rounded-3" id="stock" name="stock" required>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary rounded-pill py-2 fw-medium">Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% block title %}Gestión de Pedidos - Los Insuficientes{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- ENCABEZADO DE LA SECCIÓN -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold m-0" style="color: var(--text-dark);">Lista de Pedidos</h2>
+            <p class="text-muted small m-0">Historial de órdenes registradas en la base de datos.</p>
+        </div>
+        
+        <a href="{{ url_for('pedidos.crear_pedido') }}" class="btn btn-cream-accent rounded-pill px-4 fw-bold shadow-sm d-inline-flex align-items-center gap-2">
+            <i class="bi bi-cart-plus-fill fs-5"></i>
+            <span>Nuevo Pedido</span>
+        </a>
+    </div>
+
+    <!-- TARJETA CONTENEDORA DE LA TABLA -->
+    <div class="custom-card p-3 p-md-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--border-color) !important;">
+                        <th scope="col" class="py-3 text-uppercase text-muted small">N° Pedido</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small">ID Cliente</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small">Fecha y Hora</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pedidos %}
+                        {% for pedido in pedidos %}
+                        <tr class="border-bottom" style="border-color: var(--border-color) !important;">
+                            <!-- id_pedido (según tu base de datos) -->
+                            <td class="fw-bold" style="color: var(--accent-terracota);">#{{ pedido.id_pedido }}</td>
+                            
+                            <!-- ID_cliente -->
+                            <td>
+                                <span class="badge rounded-pill px-3 py-2" style="background-color: var(--btn-cream-bg); color: var(--text-dark); border: 1px solid var(--border-color);">
+                                    <i class="bi bi-person-fill me-1"></i> Cliente ID: {{ pedido.ID_cliente }}
+                                </span>
+                            </td>
+                            
+                            <!-- fecha -->
+                            <td class="text-muted small">
+                                <i class="bi bi-calendar3 me-1"></i> {{ pedido.fecha }}
+                            </td>
+                            
+                            <!-- ACCIONES -->
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <!-- Botón Editar Pedido -->
+                                    <a href="{{ url_for('pedidos.editar_pedido', id_pedido=pedido.id_pedido) }}" 
+                                       class="btn btn-sm btn-cream-outline rounded-circle d-flex align-items-center justify-content-center" 
+                                       style="width: 32px; height: 32px;" title="Editar pedido">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+
+                                    <!-- Botón Eliminar Pedido -->
+                                    <form action="{{ url_for('pedidos.eliminar_pedido', id_pedido=pedido.id_pedido) }}" method="POST" class="d-inline">
+                                        <button type="submit" 
+                                                class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center" 
+                                                style="width: 32px; height: 32px;" title="Eliminar pedido"
+                                                onclick="return confirm('¿Seguro que deseas eliminar este pedido?');">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Estado cuando la tabla está vacía -->
+                        <tr>
+                            <td colspan="4" class="text-center py-5">
+                                <i class="bi bi-receipt text-muted fs-1 d-block mb-2"></i>
+                                <p class="text-muted fw-semibold m-0">No hay pedidos registrados en la base de datos.</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
