@@ -1,0 +1,26 @@
+import os
+import sys
+from flask import Flask, redirect, url_for
+
+ruta_padre = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if ruta_padre not in sys.path:
+    sys.path.insert(0, ruta_padre)
+
+from controllers.producto_controller import producto_blueprint
+from controllers.cliente_controller import cliente_bp
+from controllers.pedido_controller import pedido_bp
+from controllers.detalle_pedido_controller import detalle_pedido_bp
+
+app = Flask(__name__)
+
+app.register_blueprint(producto_blueprint)
+app.register_blueprint(cliente_bp)
+app.register_blueprint(pedido_bp)
+app.register_blueprint(detalle_pedido_bp)
+
+@app.route("/")
+def home():
+    return redirect(url_for("producto.index"))
+
+if __name__ == "__main__":
+    app.run(debug=True)

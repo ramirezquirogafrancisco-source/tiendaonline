@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalle del Pedido{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- ENCABEZADO -->
+    <div class="mb-4">
+        <a href="{{ url_for('pedidos.listar_pedidos') }}" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1 mb-2">
+            <i class="bi bi-arrow-left"></i> Volver a la lista de pedidos
+        </a>
+        <h2 class="fw-bold m-0" style="color: var(--text-dark);">
+            Detalle del Pedido #{{ pedido.id_pedido if pedido else id_pedido }}
+        </h2>
+        <p class="text-muted small">Desglose de los productos e ítems comprados en esta orden.</p>
+    </div>
+
+    <!-- TARJETA CONTENEDORA -->
+    <div class="custom-card p-3 p-md-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--border-color) !important;">
+                        <th scope="col" class="py-3 text-uppercase text-muted small">ID Detalle</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small">ID Producto</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small text-center">Cantidad</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small text-end">Precio Unitario</th>
+                        <th scope="col" class="py-3 text-uppercase text-muted small text-end">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if detalles %}
+                        {% for item in detalles %}
+                        <tr class="border-bottom" style="border-color: var(--border-color) !important;">
+                            <td class="fw-bold text-muted">#{{ item.id_detalle_pedido if item.id_detalle_pedido else item.id }}</td>
+                            <td>
+                                <span class="badge rounded-pill px-3 py-2" style="background-color: var(--btn-cream-bg); color: var(--text-dark); border: 1px solid var(--border-color);">
+                                    <i class="bi bi-box-seam me-1"></i> Producto ID: {{ item.id_producto }}
+                                </span>
+                            </td>
+                            <td class="text-center fw-semibold">{{ item.cantidad }}</td>
+                            <td class="text-end">${{ item.precio_unitario if item.precio_unitario else item.precio }}</td>
+                            <td class="text-end fw-bold" style="color: var(--accent-terracota);">
+                                ${{ (item.cantidad * (item.precio_unitario if item.precio_unitario else item.precio)) if item.cantidad else '0' }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <i class="bi bi-basket text-muted fs-1 d-block mb-2"></i>
+                                <p class="text-muted fw-semibold m-0">No hay productos asociados a este pedido.</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
