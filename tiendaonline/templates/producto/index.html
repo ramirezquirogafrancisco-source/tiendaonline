@@ -25,28 +25,33 @@
                 </thead>
                 <tbody>
                     {% for producto in productos %}
-                    <!-- Forzamos la obtención segura del ID para evitar caídas de Flask -->
-                    {% set prod_id = producto['id'] or producto['ID'] or loop.index %}
+                    <!-- Usamos directamente la clave real del modelo: ID_producto -->
+                    {% set prod_id = producto['ID_producto'] %}
                     <tr>
                         <td class="ps-4 fw-medium text-secondary">#{{ prod_id }}</td>
                         <td>
-                            <div class="fw-bold text-dark">{{ producto['nombre'] or producto['Nombre aaaaa'] or 'Producto sin nombre' }}</div>
+                            <div class="fw-bold text-dark">{{ producto['nombre'] }}</div>
                         </td>
-                        <td class="fw-semibold text-primary">${{ producto['precio'] or producto['Precio'] or 0 }}</td>
+                        <td class="fw-semibold text-primary">${{ producto['precio'] }}</td>
                         <td>
-                            {% set cantidad = producto['stock'] if producto['stock'] is defined else producto['Stock'] %}
-                            {% if cantidad is defined and cantidad > 0 %}
-                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3">{{ cantidad }} unidades</span>
+                            {% if producto['stock'] > 0 %}
+                            <span
+                                class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3">{{
+                                producto['stock'] }} unidades</span>
                             {% else %}
-                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3">Agotado</span>
+                            <span
+                                class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3">Agotado</span>
                             {% endif %}
                         </td>
                         <td class="text-end pe-4">
                             <div class="d-inline-flex gap-2">
-                                <a href="{{ url_for('producto.editar', id=prod_id) }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                <a href="{{ url_for('producto.editar', id=prod_id) }}"
+                                    class="btn btn-outline-secondary btn-sm rounded-pill px-3">
                                     <i class="bi bi-pencil me-1"></i> Editar
                                 </a>
-                                <form action="{{ url_for('producto.eliminar', id=prod_id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
+                                <form action="{{ url_for('producto.eliminar', id=prod_id) }}" method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
                                     <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
                                         <i class="bi bi-trash me-1"></i> Eliminar
                                     </button>
