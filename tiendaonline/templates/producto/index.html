@@ -27,21 +27,41 @@
                 </thead>
                 <tbody>
                     {% for producto in productos %}
+<<<<<<< HEAD
+=======
+                    <!-- Usamos directamente la clave real del modelo: ID_producto -->
+                    {% set prod_id = producto['ID_producto'] %}
+>>>>>>> 071595d606f9c8dc6cec29a7ca19f14ff72d4aa6
                     <tr>
                         <td class="ps-4">#{{ producto['ID_producto'] }}</td>
                         <td class="fw-bold">{{ producto['nombre'] }}</td>
                         <td>${{ producto['precio'] }}</td>
                         <td>
+<<<<<<< HEAD
                             {% if producto['stock'] > 0 %}
                                 <span class="badge bg-success">
                                     {{ producto['stock'] }} unidades
                                 </span>
                             {% else %}
                                 <span class="badge bg-danger">Agotado</span>
+=======
+                            <div class="fw-bold text-dark">{{ producto['nombre'] }}</div>
+                        </td>
+                        <td class="fw-semibold text-primary">${{ producto['precio'] }}</td>
+                        <td>
+                            {% if producto['stock'] > 0 %}
+                            <span
+                                class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3">{{
+                                producto['stock'] }} unidades</span>
+                            {% else %}
+                            <span
+                                class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3">Agotado</span>
+>>>>>>> 071595d606f9c8dc6cec29a7ca19f14ff72d4aa6
                             {% endif %}
                         </td>
                         <td class="text-end pe-4">
                             <div class="d-inline-flex gap-2">
+<<<<<<< HEAD
                                 <a href="{{ url_for('producto.editar', id=producto['ID_producto']) }}"
                                    class="btn btn-outline-secondary btn-sm rounded-pill px-3">
                                     <i class="bi bi-pencil me-1"></i> Editar
@@ -52,6 +72,16 @@
                                       onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
                                     <button type="submit"
                                             class="btn btn-outline-danger btn-sm rounded-pill px-3">
+=======
+                                <a href="{{ url_for('producto.editar', id=prod_id) }}"
+                                    class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                    <i class="bi bi-pencil me-1"></i> Editar
+                                </a>
+                                <form action="{{ url_for('producto.eliminar', id=prod_id) }}" method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+>>>>>>> 071595d606f9c8dc6cec29a7ca19f14ff72d4aa6
                                         <i class="bi bi-trash me-1"></i> Eliminar
                                     </button>
                                 </form>
